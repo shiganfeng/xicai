@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>frontend</artifactId>
+  <parent>
+    <groupId>de.jonashackt</groupId>
+    <artifactId>spring-boot-vuejs</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <frontend-maven-plugin.version>1.9.1</frontend-maven-plugin.version>
+  </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>${frontend-maven-plugin.version}</version>
+        <executions>
+          <!-- Install our node and npm version to run npm/node scripts-->
+          <execution>
+            <id>install node and npm</id>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+            <configuration>
+              <nodeVersion>v12.12.0</nodeVersion>
+              <npmVersion>6.14.5</npmVersion>
+              <!-- <yarnVersion>v1.22.4</yarnVersion> -->
+              <!-- optional: where to download node from. Defaults to https://nodejs.org/dist/ -->
+              <nodeDownloadRoot>http://10.145.6.149/</nodeDownloadRoot>
+              <npmDownloadRoot>http://10.145.6.149/</npmDownloadRoot>
+              <!-- optional: where to download yarn from. Defaults to https://github.com/yarnpkg/yarn/releases/download/ -->
+              <!-- <yarnDownloadRoot>http://10.145.6.149/</yarnDownloadRoot>   -->
+            </configuration>
+          </execution>
+          <!-- Install all project dependencies -->
+          <execution>
+            <id>npm install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <!-- optional: default phase is "generate-resources" -->
+            <!-- <phase>generate-resources</phase> -->
+            <!-- Optional configuration which provides for running any npm command -->
+            <configuration>
+              <arguments>install --registry=http://10.145.6.149:8081/repository/npm-group/ --verbose</arguments>
+            </configuration>
+          </execution>
+          <!-- Build and minify static files -->
+          <execution>
+            <id>npm build</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>run build</arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
